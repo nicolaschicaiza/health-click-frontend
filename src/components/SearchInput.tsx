@@ -15,20 +15,12 @@ const options: IOptionMenu[] = [
   { key: "download", label: "Download Clinical History", path: "/download" },
 ]
 
-const suffix = (
-  <Button
-    type="link"
-    icon={<AudioOutlined style={{ fontSize: 16 }} />}
-    onClick={() => {
-
-    }}
-  />
-);
 
 export default function SearchInput() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredOption, setFilteredOptions] = useState(options);
   const navigate = useNavigate();
+
 
   const onSearch = (value: string) => {
     setSearchTerm(value);
@@ -54,6 +46,14 @@ export default function SearchInput() {
       ))}
     </Menu>
   )
+
+  const suffix = (
+    <Button
+      type="link"
+      icon={<AudioOutlined style={{ fontSize: 16 }} />}
+      onClick={() => navigate('/radisys')}
+    />
+  );
 
   return (
     <Dropdown overlay={menu}>

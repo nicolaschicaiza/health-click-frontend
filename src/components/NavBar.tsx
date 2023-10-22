@@ -23,7 +23,7 @@ function NavBar() {
     return name;
   }
 
-  const limitedName = limitNameLength('Nicolás Chicaiza Carrasquilla', 20);
+  const limitedName = limitNameLength('Super Admin', 20);
 
   return (
     <Row justify={'center'} style={{
