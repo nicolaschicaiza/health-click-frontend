@@ -1,8 +1,13 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import { Suspense, lazy } from 'react'
+import { Template } from './templates/Template';
 
 const HomePage = lazy(() => import('./pages/HomePage'));
+const SummaryPage = lazy(() => import('./pages/SummaryPage'));
+const ConsultationPage = lazy(() => import('./pages/ConsultationPage'));
+const DownloadPage = lazy(() => import('./pages/DownloadPage'));
+const SignInRegistrationPage = lazy(() => import('./pages/SignInRegistrationPage'));
 
 function App() {
 
@@ -10,9 +15,13 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Navigate to="/home" />} />
-        <Route path="/home" element={<Suspense fallback={<div>Loading...</div>}><HomePage /></Suspense>} />
+        <Route path="/home" element={<Template><Suspense fallback={<div>Loading...</div>}><HomePage /></Suspense></Template>} />
+        <Route path="/summary" element={<Template><Suspense fallback={<div>Loading...</div>}><SummaryPage /></Suspense></Template>} />
+        <Route path="/consultation" element={<Template><Suspense fallback={<div>Loading...</div>}><ConsultationPage /></Suspense></Template>} />
+        <Route path="/download" element={<Template><Suspense fallback={<div>Loading...</div>}><DownloadPage /></Suspense></Template>} />
+        <Route path="/login" element={<Suspense fallback={<div>Loading...</div>}><SignInRegistrationPage /></Suspense>} />
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter >
   )
 }
 

@@ -1,79 +1,67 @@
-import React, { useState } from 'react';
-import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
-import './NavBar.css'; // Import the CSS file
+import React from 'react';
+import { HomeOutlined } from '@ant-design/icons';
+import { Button, Col, Menu, Row } from 'antd';
+import PerfilButton from './PerfilButton';
+import SearchInput from './SearchInput';
+import { useNavigate } from 'react-router';
 
-const items: MenuProps['items'] = [
-  {
-    label: 'Navigation One',
-    key: 'mail',
-    icon: <MailOutlined />,
-  },
-  {
-    label: 'Navigation Two',
-    key: 'app',
-    icon: <AppstoreOutlined />,
-    disabled: true,
-  },
-  {
-    label: 'Navigation Three - Submenu',
-    key: 'SubMenu',
-    icon: <SettingOutlined />,
-    children: [
-      {
-        type: 'group',
-        label: 'Item 1',
-        children: [
-          {
-            label: 'Option 1',
-            key: 'setting:1',
-          },
-          {
-            label: 'Option 2',
-            key: 'setting:2',
-          },
-        ],
-      },
-      {
-        type: 'group',
-        label: 'Item 2',
-        children: [
-          {
-            label: 'Option 3',
-            key: 'setting:3',
-          },
-          {
-            label: 'Option 4',
-            key: 'setting:4',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    label: (
-      <a href="https://ant.design" target="_blank" rel="noopener noreferrer">
-        Navigation Four - Link
-      </a>
-    ),
-    key: 'alipay',
-  },
-];
+const menuStyles: React.CSSProperties = {
+  backgroundColor: "gray",
+  borderRadius: '6px',
+  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.4)',
+  padding: '5px 5px'
+}
 
-const NavBar: React.FC = () => {
-  const [current, setCurrent] = useState('mail');
 
-  const onClick: MenuProps['onClick'] = (e) => {
-    console.log('click ', e);
-    setCurrent(e.key);
-  };
+function NavBar() {
+  const navigate = useNavigate();
+
+  const limitNameLength = (name: string, maxLength: number) => {
+    if (name.length > maxLength) {
+      return name.slice(0, maxLength) + '...';
+    }
+    return name;
+  }
+
+  const limitedName = limitNameLength('Nicolás Chicaiza Carrasquilla', 20);
 
   return (
-    <div className="bottom-floating-menu"> {/* Add a CSS class */}
-      <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items} />
-    </div>
+    <Row justify={'center'} style={{
+      position: 'fixed',
+      bottom: 15,
+      left: '50%',
+      transform: 'translateX(-50%)',
+      width: '40%', /* Ajusta el porcentaje de ancho que desees */
+    }} >
+      <Col span={24}>
+        <Menu style={menuStyles} theme={'dark'} mode={'horizontal'} >
+          <Col span={24}>
+            <Row justify={'space-between'} align={'middle'}>
+              <Col span={16}>
+                <Row justify={'start'}>
+                  <Col span={4}>
+                    <Button type={'link'} size={'large'} ghost style={{ color: 'white' }} onClick={() => {
+                      navigate('/home');
+                    }}>
+                      <HomeOutlined />
+                    </Button>
+                  </Col>
+                  <Col span={20}>
+                    <Row align={'middle'}>
+                      <SearchInput />
+                    </Row>
+                  </Col>
+                </Row>
+              </Col>
+              <Col span={8}>
+                <PerfilButton name={limitedName} />
+              </Col>
+            </Row>
+          </Col>
+        </Menu>
+      </Col>
+    </Row>
   );
-};
+}
 
 export default NavBar;
